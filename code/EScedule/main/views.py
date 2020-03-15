@@ -49,7 +49,7 @@ def add_lesson(request):
             new_lesson.user = login
 
             new_lesson.save()
-        return redirect('/')
+        return redirect(f'/?day={request.GET["day"]}')
     else:
         return redirect('/signup')
 
