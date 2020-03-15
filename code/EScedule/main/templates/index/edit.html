@@ -1,0 +1,14 @@
+{% extends '../wrapper.html' %}
+
+{% block content %}
+<span class="subtitle">Изменение</span><br><br>
+<form class="" action="/edit_lesson" method="get">
+    <label for="">Введите новое значение</label><br>
+    <textarea style="padding: 1%" cols="50" rows="5"type="text" name="edited" value="">{{ current }}</textarea><br><br>
+    <label for="">Id: {{ id }}</label><br><br>
+    <input style="display: none" type="number" name="id" value="{{ id }}"><br><br>
+    <label for="">Колонка: {{ col }}</label><br><br>
+    <input style="display: none" type="text" name="col" value="{{ col }}"><br><br>
+    <button type="submit">Изменить</button>
+</form>
+{% endblock %}

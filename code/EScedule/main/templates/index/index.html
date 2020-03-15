@@ -1,0 +1,37 @@
+{% extends '../wrapper.html' %}
+
+{% block content %}
+<table>
+    <thead>
+        <th>Урок</th>
+        <th>Время</th>
+        <th>Домашнее задание</th>
+        <th>Выполнено</th>
+        <th>Примечание</th>
+    </thead>
+    <tbody>
+        {% for lesson in lessons %}
+        <tr>
+            <td>{{ lesson.name }}</td>
+            <td>{{ lesson.time }}</td>
+            <td>{{ lesson.hometask}} <a class="edit" onclick="edit_lesson({{lesson.id}}, 'Домашнее задание', '{{lesson.hometask}}')"><img src="https://img.icons8.com/ultraviolet/15/000000/pencil.png"/></a></td>
+            <td>{{ lesson.is_done }}</td>
+            <td>{{ lesson.note }} <a class="edit" onclick="edit_lesson({{lesson.id}}, 'note', '{{lesson.note}}')"><img src="https://img.icons8.com/ultraviolet/15/000000/pencil.png"/></a></td>
+
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a onclick="add_lesson({{ day }})">Добавить урок</a>
+
+
+<script type="text/javascript">
+    function add_lesson(id) {
+        window.location.href = `/add_lesson_page?day=${id}`
+    }
+    function edit_lesson(id, col, current) {
+        window.location.href = `/edit_lesson_page?id=${id}&col=${col}&current=${current}`
+    }
+
+</script>
+{% endblock %}

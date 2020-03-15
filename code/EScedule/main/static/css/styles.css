@@ -1,0 +1,8 @@
+nav {
+    padding: 1%;
+    box-shadow: 0 0 1px black
+}
+
+a.edit {
+    float: right;
+}

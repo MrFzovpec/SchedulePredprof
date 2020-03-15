@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    {% load static %}
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <title>E-Schedule</title>
+</head>
+
+<body>
+    <section class="hero is-medium is-dark is-bold">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                    E-Schedule
+                </h1>
+                <h2 class="subtitle">
+                    Электронное расписание школьника, проект команды IGPT
+                </h2>
+            </div>
+        </div>
+    </section>
+    <section class="content container section">
+        <div class="columns">
+            <div class="column"><a onclick="monday()">Понедельник</a></div>
+            <div class="column"><a onclick="tuesday()">Вторник</a></div>
+            <div class="column"><a onclick="wednesday()">Среда</a></div>
+            <div class="column"><a onclick="thursday()">Четверг</a></div>
+            <div class="column"><a onclick="friday()">Пятница</a></div>
+            <div class="column"><a onclick="saturday()">Суббота</a></div>
+            <div class="column"><a onclick="sunday()">Воскресенье</a></div>
+        </div>
+        {% block content %}
+        {% endblock %}
+    </section>
+
+</body>
+<script type="text/javascript">
+    function monday() {
+        window.location.href = "/?day=1"
+    }
+    function tuesday() {
+        window.location.href = "/?day=2"
+    }
+    function wednesday(){
+        window.location.href = "/?day=3"
+    }
+    function thursday() {
+        window.location.href = "/?day=4"
+    }
+    function friday() {
+        window.location.href = "/?day=5"
+    }
+    function saturday() {
+        window.location.href = "/?day=6"
+    }
+    function sunday() {
+        window.location.href = "/?day=7"
+    }
+
+</script>
+
+</html>
