@@ -23,7 +23,7 @@
             {% else %}
                 <td><a onclick="done_hometask({{lesson.id}})"><img src="https://img.icons8.com/offices/18/000000/cancel.png"/></a></td>
             {% endif %}
-            <td>{{ lesson.note }} <a class="edit" onclick="edit_lesson({{lesson.id}}, 'note', '{{lesson.note}}')"><img src="https://img.icons8.com/ultraviolet/15/000000/pencil.png"/></a></td>
+            <td>{{ lesson.note }} <a class="edit" onclick="edit_lesson({{lesson.id}}, 'Примечание', '{{lesson.note}}')"><img src="https://img.icons8.com/ultraviolet/15/000000/pencil.png"/></a></td>
             <td><a onclick="remove({{lesson.id}})">Удалить</a></td>
             <td><a onclick="edit_inf({{lesson.id}})">Изменить</a></td>
         </tr>

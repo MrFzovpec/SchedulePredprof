@@ -1,15 +1,15 @@
 {% extends '../wrapper.html' %}
 
 {% block content %}
-<span class="subtitle">Добавить урок</span><br><br>
+<span class="subtitle">Добавить задачу</span><br><br>
 <form class="" action="/add_lesson" method="get">
-    <label for="">Название урока</label><br>
+    <label for="">Название задачи</label><br>
     <input type="text" name="lesson_name" value=""><br>
     <label for="">Номер дня: {{ day }}</label>
     <input style="display: none" type="number" name="day" value="{{ day }}"><br><br>
-    <label for="">Время урока</label>
+    <label for="">Время задачи</label>
     <input type="time" name="time" value=""><br><br>
-    <label for="">Домашнее задание</label><br>
+    <label for="">Задание</label><br>
     <textarea cols="50" rows="5" style="padding: 1%"  type="text" name="homework" value=""></textarea><br><br>
     <label for="">Примечание</label><br>
     <textarea cols="50" rows="5" style="padding: 1%" type="text" name="note" value=""></textarea><br><br>

@@ -20,7 +20,7 @@ def index(request):
             day = request.GET['day']
         except:
             day = 1
-        lessons = Lesson.objects.filter(day=day).order_by('time')
+        lessons = Lesson.objects.filter(day=day, user=login).order_by('time')
 
         return render(request, 'index/index.html', {'lessons': lessons, 'day': day, 'day_name': days[int(day)], 'user': login, 'auf': True})
     else:
@@ -35,6 +35,7 @@ def add_lesson_page(request):
 
 def add_lesson(request):
     if request.user.is_authenticated:
+        login = request.user.username
         check = request.GET.get('lesson_name', None)
 
         if check:
@@ -45,6 +46,7 @@ def add_lesson(request):
             new_lesson.time = request.GET['time']
             new_lesson.hometask = request.GET['homework']
             new_lesson.note = request.GET['note']
+            new_lesson.user = login
 
             new_lesson.save()
         return redirect('/')
@@ -63,7 +65,7 @@ def edit_lesson(request):
     col = request.GET['col']
     if col == 'Домашнее задание':
         Lesson.objects.filter(id=id).update(hometask=new_text)
-    elif col == 'note':
+    elif col == 'Примечание':
         Lesson.objects.filter(id=id).update(note=new_text)
 
     return redirect('/')
@@ -107,6 +109,8 @@ def login_us(request):
         if user is not None:
             login(request, user)
             return redirect('/')
+        else:
+            return redirect('/login')
     else:
         return render(request, 'login/login.html')
 def signup(request):
@@ -121,4 +125,4 @@ def signup(request):
 
 def logout_us(request):
     logout(request)
-    return redirect('/signup')
+    return redirect('/login')
