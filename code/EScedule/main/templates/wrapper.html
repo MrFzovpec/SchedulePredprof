@@ -26,6 +26,11 @@
         </div>
     </section>
     <section class="content container section">
+        {% if auf %}
+            <span class="subtitle">Пользователь {{ user }}</span><br>
+            <a href="/logout">Выйти</a>
+            <br><br>
+        {% endif %}
         <div class="columns">
             <div class="column"><a onclick="monday()">Понедельник</a></div>
             <div class="column"><a onclick="tuesday()">Вторник</a></div>

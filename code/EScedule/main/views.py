@@ -1,44 +1,55 @@
 from django.shortcuts import render, redirect
 from .models import Lesson
 from datetime import datetime
+from django.contrib.auth.models import User
+from django.contrib.auth import login, logout, authenticate
 # Create your views here.
 def index(request):
-    days = {
-        1: ' понедельник',
-        2: 'о вторник',
-        3: ' среда',
-        4: ' четверг',
-        5: ' пятница',
-        6: ' суббота',
-        7: ' воскресенье',
-    }
-    try:
-        day = request.GET['day']
-    except:
-        day = 1
-    lessons = Lesson.objects.filter(day=day).order_by('time')
+    if request.user.is_authenticated:
+        login = request.user.username
+        days = {
+            1: ' понедельник',
+            2: 'о вторник',
+            3: ' среда',
+            4: ' четверг',
+            5: ' пятница',
+            6: ' суббота',
+            7: ' воскресенье',
+        }
+        try:
+            day = request.GET['day']
+        except:
+            day = 1
+        lessons = Lesson.objects.filter(day=day).order_by('time')
 
-    return render(request, 'index/index.html', {'lessons': lessons, 'day': day, 'day_name': days[int(day)]})
+        return render(request, 'index/index.html', {'lessons': lessons, 'day': day, 'day_name': days[int(day)], 'user': login, 'auf': True})
+    else:
+        return redirect('/signup')
 
 def add_lesson_page(request):
-    day = request.GET['day']
-    return render(request, 'index/add_page.html', {'day': day})
+    if request.user.is_authenticated:
+        day = request.GET['day']
+        return render(request, 'index/add_page.html', {'day': day})
+    else:
+        return redirect('/signup')
 
 def add_lesson(request):
+    if request.user.is_authenticated:
+        check = request.GET.get('lesson_name', None)
 
-    check = request.GET.get('lesson_name', None)
+        if check:
+            new_lesson = Lesson()
 
-    if check:
-        new_lesson = Lesson()
+            new_lesson.name = request.GET['lesson_name']
+            new_lesson.day = request.GET['day']
+            new_lesson.time = request.GET['time']
+            new_lesson.hometask = request.GET['homework']
+            new_lesson.note = request.GET['note']
 
-        new_lesson.name = request.GET['lesson_name']
-        new_lesson.day = request.GET['day']
-        new_lesson.time = request.GET['time']
-        new_lesson.hometask = request.GET['homework']
-        new_lesson.note = request.GET['note']
-
-        new_lesson.save()
-    return redirect('/')
+            new_lesson.save()
+        return redirect('/')
+    else:
+        return redirect('/signup')
 
 def edit_lesson_page(request):
     id = request.GET['id']
@@ -86,3 +97,28 @@ def edit_inf(request):
         Lesson.objects.filter(id=id).update(name=name, day=day, hometask=hometask, note=note)
 
     return redirect('/')
+
+
+def login_us(request):
+    if request.method == 'POST':
+        username = request.POST['login']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('/')
+    else:
+        return render(request, 'login/login.html')
+def signup(request):
+    if request.method == 'POST':
+        try:
+            User.objects.create_user(username=request.POST['login'], password=request.POST['password'])
+        except:
+            return redirect('/login')
+
+    return render(request, 'login/register.html', )
+
+
+def logout_us(request):
+    logout(request)
+    return redirect('/signup')

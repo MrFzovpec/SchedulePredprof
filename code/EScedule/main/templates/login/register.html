@@ -1,10 +1,10 @@
 {% extends '../wrapper.html' %}
 
+
 {% block content %}
-{{ message }}
 <div class="form-section">
-    <h2>Вход</h2>
-    <form class="" action="/login/" method="post">
+    <h1>Регистрация</h1>
+    <form class="" action="/signup/" method="post">
         {% csrf_token %}
         <div class="field">
             <div class="control">
@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="control">
-            <button type="submit" class="button is-link is-light">Войти</button>
+            <button type="submit" class="button is-link is-light">Зарегестрироваться</button>
         </div>
     </form>
 
