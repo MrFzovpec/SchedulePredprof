@@ -8,3 +8,7 @@ class Lesson(models.Model):
     hometask = models.TextField(default='')
     is_done = models.BooleanField(default=False)
     note = models.TextField(default='')
+
+class User(models.Model):
+    name = models.TextField(null=False, default=None)
+    password = models.TextField(null=False)

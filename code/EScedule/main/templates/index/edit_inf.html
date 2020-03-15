@@ -1,18 +1,21 @@
 {% extends '../wrapper.html' %}
 
 {% block content %}
-<span class="subtitle">Добавить урок</span><br><br>
-<form class="" action="/add_lesson" method="get">
+<span class="subtitle">Изменить урок</span><br><br>
+<form class="" action="/edit_inf" method="get">
+    <input type="number" name="id" style="display: none" value="{{ lesson.id }}">
     <label for="">Название урока</label><br>
-    <input type="text" name="lesson_name" value=""><br>
-    <label for="">Номер дня: {{ day }}</label>
-    <input style="display: none" type="number" name="day" value="{{ day }}"><br><br>
-    <label for="">Время урока</label>
-    <input type="time" name="time" value=""><br><br>
+    <input type="text" name="lesson_name" value="{{ lesson.name }}"><br>
+    <label for="">Номер дня: {{ lesson.day }}</label>
+    <input style="display: none" type="number" name="day" value="{{ lesson.day }}"><br><br>
+    <label for="">Время урока {{ lesson.time }}</label><br>
+    <label for="">Изменить время</label><br>
+    <input type="time" name="new_time" value=""><br><br>
     <label for="">Домашнее задание</label><br>
-    <textarea cols="50" rows="5" style="padding: 1%"  type="text" name="homework" value=""></textarea><br><br>
+    <textarea cols="50" rows="5" style="padding: 1%"  type="text" name="homework" value="">{{lesson.hometask}}</textarea><br><br>
+
     <label for="">Примечание</label><br>
-    <textarea cols="50" rows="5" style="padding: 1%" type="text" name="note" value=""></textarea><br><br>
-    <button type="submit">Добавить</button>
+    <textarea cols="50" rows="5" style="padding: 1%" type="text" name="note" value="">{{lesson.note}}</textarea><br><br>
+    <button type="submit">Изменить</button>
 </form>
 {% endblock %}

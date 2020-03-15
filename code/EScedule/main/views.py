@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Lesson
+from datetime import datetime
 # Create your views here.
 def index(request):
     days = {
@@ -15,7 +16,8 @@ def index(request):
         day = request.GET['day']
     except:
         day = 1
-    lessons = Lesson.objects.filter(day=day)
+    lessons = Lesson.objects.filter(day=day).order_by('time')
+
     return render(request, 'index/index.html', {'lessons': lessons, 'day': day, 'day_name': days[int(day)]})
 
 def add_lesson_page(request):
@@ -67,6 +69,20 @@ def remove(request):
 
 def edit_inf_page(request):
     id = request.GET['id']
-    current = Lesson.objects.filter(id=id).get()
-    print(current)
-    return render(request, 'index/edit_inf.html')
+    lesson = Lesson.objects.filter(id=id).get()
+    return render(request, 'index/edit_inf.html', {'lesson': lesson})
+
+def edit_inf(request):
+    id = request.GET['id']
+    name = request.GET['lesson_name']
+    day = request.GET['day']
+    hometask = request.GET['homework']
+    note = request.GET['note']
+
+    try:
+        new_time = request.GET['new_time']
+        Lesson.objects.filter(id=id).update(name=name, day=day, hometask=hometask, note=note, time=new_time)
+    except:
+        Lesson.objects.filter(id=id).update(name=name, day=day, hometask=hometask, note=note)
+
+    return redirect('/')
