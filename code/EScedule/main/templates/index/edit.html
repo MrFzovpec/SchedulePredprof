@@ -4,11 +4,11 @@
 <span class="subtitle">Изменение</span><br><br>
 <form class="" action="/edit_lesson" method="get">
     <label for="">Введите новое значение</label><br>
-    <textarea style="padding: 1%" cols="50" rows="5"type="text" name="edited" value="">{{ current }}</textarea><br><br>
+    <textarea class="textarea" style="padding: 1%" cols="50" rows="5"type="text" name="edited" value="">{{ current }}</textarea><br><br>
     <label for="">Id: {{ id }}</label><br><br>
-    <input style="display: none" type="number" name="id" value="{{ id }}">
+    <input class="input" style="display: none" type="number" name="id" value="{{ id }}">
     <label for="">Колонка: {{ col }}</label><br><br>
-    <input style="display: none" type="text" name="col" value="{{ col }}">
-    <button type="submit">Изменить</button>
+    <input class="input" style="display: none" type="text" name="col" value="{{ col }}">
+    <button class="button is-link is-light" type="submit">Изменить</button>
 </form>
 {% endblock %}

@@ -54,51 +54,68 @@ def add_lesson(request):
         return redirect('/signup')
 
 def edit_lesson_page(request):
-    id = request.GET['id']
-    col = request.GET['col']
-    current = request.GET['current']
-    return render(request, 'index/edit.html', {'col': col, 'id': id, 'current': current})
+    if request.user.is_authenticated:
+        id = request.GET['id']
+        col = request.GET['col']
+        current = request.GET['current']
+        return render(request, 'index/edit.html', {'col': col, 'id': id, 'current': current})
+    else:
+        return redirect('/signup')
 
 def edit_lesson(request):
-    new_text = request.GET['edited'].replace('\n', '')
-    id = request.GET['id']
-    col = request.GET['col']
-    if col == 'Домашнее задание':
-        Lesson.objects.filter(id=id).update(hometask=new_text)
-    elif col == 'Примечание':
-        Lesson.objects.filter(id=id).update(note=new_text)
+    if request.user.is_authenticated:
+        new_text = request.GET['edited'].replace('\n', '')
+        id = request.GET['id']
+        col = request.GET['col']
+        if col == 'Домашнее задание':
+            Lesson.objects.filter(id=id).update(hometask=new_text)
+        elif col == 'Примечание':
+            Lesson.objects.filter(id=id).update(note=new_text)
 
-    return redirect('/')
-
+        return redirect('/')
+    else:
+        return redirect('/signup')
 def done(request):
-    id = request.GET['id']
-    Lesson.objects.filter(id=id).update(is_done=True)
-    return redirect('/')
+    if request.user.is_authenticated:
+        id = request.GET['id']
+        Lesson.objects.filter(id=id).update(is_done=True)
+        return redirect('/')
+    else:
+        return redirect('/signup')
 
 def remove(request):
-    id = request.GET['id']
-    Lesson.objects.filter(id=id).delete()
-    return redirect('/')
+    if request.user.is_authenticated:
+        id = request.GET['id']
+        Lesson.objects.filter(id=id).delete()
+        return redirect('/')
+    else:
+        return redirect('/signup')
 
 def edit_inf_page(request):
-    id = request.GET['id']
-    lesson = Lesson.objects.filter(id=id).get()
-    return render(request, 'index/edit_inf.html', {'lesson': lesson})
+    if request.user.is_authenticated:
+        id = request.GET['id']
+        lesson = Lesson.objects.filter(id=id).get()
+        return render(request, 'index/edit_inf.html', {'lesson': lesson})
+    else:
+        return redirect('/signup')
 
 def edit_inf(request):
-    id = request.GET['id']
-    name = request.GET['lesson_name']
-    day = request.GET['day']
-    hometask = request.GET['homework']
-    note = request.GET['note']
+    if request.user.is_authenticated:
+        id = request.GET['id']
+        name = request.GET['lesson_name']
+        day = request.GET['day']
+        hometask = request.GET['homework']
+        note = request.GET['note']
 
-    try:
-        new_time = request.GET['new_time']
-        Lesson.objects.filter(id=id).update(name=name, day=day, hometask=hometask, note=note, time=new_time)
-    except:
-        Lesson.objects.filter(id=id).update(name=name, day=day, hometask=hometask, note=note)
+        try:
+            new_time = request.GET['new_time']
+            Lesson.objects.filter(id=id).update(name=name, day=day, hometask=hometask, note=note, time=new_time)
+        except:
+            Lesson.objects.filter(id=id).update(name=name, day=day, hometask=hometask, note=note)
 
-    return redirect('/')
+        return redirect('/')
+    else:
+        return redirect('/signup')
 
 
 def login_us(request):
@@ -124,5 +141,6 @@ def signup(request):
 
 
 def logout_us(request):
-    logout(request)
+    if request.user.is_authenticated:
+        logout(request)
     return redirect('/login')

@@ -4,15 +4,15 @@
 <span class="subtitle">Добавить задачу</span><br><br>
 <form class="" action="/add_lesson" method="get">
     <label for="">Название задачи</label><br>
-    <input type="text" name="lesson_name" value=""><br>
+    <input class="input" type="text" name="lesson_name" value=""><br>
     <label for="">Номер дня: {{ day }}</label>
-    <input style="display: none" type="number" name="day" value="{{ day }}"><br><br>
+    <input class="input" style="display: none" type="number" name="day" value="{{ day }}"><br><br>
     <label for="">Время задачи</label>
-    <input type="time" name="time" value=""><br><br>
+    <input class="input" type="time" name="time" value=""><br><br>
     <label for="">Задание</label><br>
-    <textarea cols="50" rows="5" style="padding: 1%"  type="text" name="homework" value=""></textarea><br><br>
+    <textarea class="textarea" cols="50" rows="5" style="padding: 1%"  type="text" name="homework" value=""></textarea><br><br>
     <label for="">Примечание</label><br>
-    <textarea cols="50" rows="5" style="padding: 1%" type="text" name="note" value=""></textarea><br><br>
-    <button type="submit">Добавить</button>
+    <textarea class="textarea" cols="50" rows="5" style="padding: 1%" type="text" name="note" value=""></textarea><br><br>
+    <button class="button is-link is-light" type="submit">Добавить</button>
 </form>
 {% endblock %}
