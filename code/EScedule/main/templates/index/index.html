@@ -1,6 +1,7 @@
 {% extends '../wrapper.html' %}
 
 {% block content %}
+<h1>События в{{ day_name }}</h1>
 <table>
     <thead>
         <th>Урок</th>
@@ -8,6 +9,8 @@
         <th>Домашнее задание</th>
         <th>Выполнено</th>
         <th>Примечание</th>
+        <th>Удалить урок</th>
+        <th>Изменить информацию</th>
     </thead>
     <tbody>
         {% for lesson in lessons %}
@@ -15,9 +18,14 @@
             <td>{{ lesson.name }}</td>
             <td>{{ lesson.time }}</td>
             <td>{{ lesson.hometask}} <a class="edit" onclick="edit_lesson({{lesson.id}}, 'Домашнее задание', '{{lesson.hometask}}')"><img src="https://img.icons8.com/ultraviolet/15/000000/pencil.png"/></a></td>
-            <td>{{ lesson.is_done }}</td>
+            {% if lesson.is_done %}
+                <td><img src="https://img.icons8.com/flat_round/18/000000/checkmark.png"/></td>
+            {% else %}
+                <td><a onclick="done_hometask({{lesson.id}})"><img src="https://img.icons8.com/offices/18/000000/cancel.png"/></a></td>
+            {% endif %}
             <td>{{ lesson.note }} <a class="edit" onclick="edit_lesson({{lesson.id}}, 'note', '{{lesson.note}}')"><img src="https://img.icons8.com/ultraviolet/15/000000/pencil.png"/></a></td>
-
+            <td><a onclick="remove({{lesson.id}})">Удалить</a></td>
+            <td><a onclick="edit_inf({{lesson.id}})">Изменить</a></td>
         </tr>
         {% endfor %}
     </tbody>
@@ -32,6 +40,14 @@
     function edit_lesson(id, col, current) {
         window.location.href = `/edit_lesson_page?id=${id}&col=${col}&current=${current}`
     }
-
+    function done_hometask(id) {
+        window.location.href = `/done?id=${id}`
+    }
+    function remove(id) {
+        window.location.href = `/remove?id=${id}`
+    }
+    function edit_inf(id) {
+        window.location.href = `/edit?id=${id}`
+    }
 </script>
 {% endblock %}

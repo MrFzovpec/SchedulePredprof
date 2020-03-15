@@ -2,12 +2,21 @@ from django.shortcuts import render, redirect
 from .models import Lesson
 # Create your views here.
 def index(request):
+    days = {
+        1: ' понедельник',
+        2: 'о вторник',
+        3: ' среда',
+        4: ' четверг',
+        5: ' пятница',
+        6: ' суббота',
+        7: ' воскресенье',
+    }
     try:
         day = request.GET['day']
     except:
         day = 1
     lessons = Lesson.objects.filter(day=day)
-    return render(request, 'index/index.html', {'lessons': lessons, 'day': day})
+    return render(request, 'index/index.html', {'lessons': lessons, 'day': day, 'day_name': days[int(day)]})
 
 def add_lesson_page(request):
     day = request.GET['day']
@@ -45,3 +54,19 @@ def edit_lesson(request):
         Lesson.objects.filter(id=id).update(note=new_text)
 
     return redirect('/')
+
+def done(request):
+    id = request.GET['id']
+    Lesson.objects.filter(id=id).update(is_done=True)
+    return redirect('/')
+
+def remove(request):
+    id = request.GET['id']
+    Lesson.objects.filter(id=id).delete()
+    return redirect('/')
+
+def edit_inf_page(request):
+    id = request.GET['id']
+    current = Lesson.objects.filter(id=id).get()
+    print(current)
+    return render(request, 'index/edit_inf.html')
